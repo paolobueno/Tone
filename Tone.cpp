@@ -23,7 +23,7 @@
 
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-#include <wiring.h>
+#include <wiring_private.h>
 #include <pins_arduino.h>
 #include "Tone.h"
 
@@ -196,7 +196,7 @@ void Tone::play(uint16_t frequency, uint32_t duration)
   {
     // Set the pinMode as OUTPUT
     pinMode(_pin, OUTPUT);
-    
+
     // if we are using an 8 bit timer, scan through prescalars to find the best fit
     if (_timer == 0 || _timer == 2)
     {
@@ -269,7 +269,7 @@ void Tone::play(uint16_t frequency, uint32_t duration)
 #endif
 
     }
-    
+
 
     // Calculate the toggle count
     if (duration > 0)
@@ -365,7 +365,7 @@ void Tone::stop()
 bool Tone::isPlaying(void)
 {
   bool returnvalue = false;
-  
+
   switch (_timer)
   {
 #if !defined(__AVR_ATmega8__)
@@ -453,7 +453,7 @@ ISR(TIMER2_COMPA_vect)
     TIMSK2 &= ~(1 << OCIE2A);                 // disable the interrupt
     *timer2_pin_port &= ~(timer2_pin_mask);   // keep pin low after stop
   }
-  
+
   timer2_toggle_count = temp_toggle_count;
 }
 
